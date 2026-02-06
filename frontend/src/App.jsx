@@ -3,6 +3,8 @@ import RiskForm from "./components/RiskForm"
 import Dashboard from "./components/Dashboard";
 
 export default function App() {
+  console.log("API URL:", import.meta.env.VITE_API_URL);
+
   const [reloadFlag, setReloadFlag] = useState(0);
 
   function handleRiskAdded() {
