@@ -135,10 +135,10 @@ The risk input form allows users to define assets and threats, select likelihood
 ## Screenshots
 
 ### Risk Assessment Form with Live Preview
-![Risk Form Preview](frontend/screenshots/Screenshot 2026-02-06 162225.png)
+![Risk Form Preview](frontend/screenshots/risk-form.png)
 
 ### Risk Dashboard with Filtering, Sorting, and Export
-![Risk Dashboard Table](frontend/screenshots/Screenshot 2026-02-06 162247.png)
+![Risk Dashboard Table](frontend/screenshots/risk-dashboard.png)
 
 ### Risk Heatmap (Likelihood × Impact Matrix)
-![Risk Heatmap](frontend/screenshots/Screenshot 2026-02-06 162301.png)
+![Risk Heatmap](frontend/screenshots/risk-heatmap.png)
