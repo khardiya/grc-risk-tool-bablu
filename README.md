@@ -154,3 +154,11 @@ The risk input form allows users to define assets and threats, select likelihood
 
 ### Risk Heatmap (Likelihood × Impact Matrix)
 ![Risk Heatmap](frontend/screenshots/risk-heatmap.png)
+
+
+## Live Demo (Optional)
+
+The application has been deployed to demonstrate end-to-end functionality without requiring local setup.
+
+- **Frontend (Vercel):** https://grc-risk-assessment-dashboard.vercel.app  
+- **Backend API (Render):** https://grc-risk-backend.onrender.com
