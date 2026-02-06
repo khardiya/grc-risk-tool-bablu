@@ -1,0 +1,119 @@
+/* ===== Global ===== */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2 {
+  color: #1f2937;
+}
+
+button {
+  padding: 8px 14px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1e40af;
+}
+
+/* ===== Layout ===== */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* ===== Form ===== */
+.risk-form {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.risk-form input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.risk-form label {
+  font-weight: bold;
+  color: #374151;
+}
+
+.preview {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* ===== Table ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th {
+  background-color: #e5e7eb;
+  text-align: left;
+  padding: 10px;
+  cursor: pointer;
+}
+
+td {
+  padding: 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* ===== Risk Levels ===== */
+.level-Low {
+  color: #15803d;
+  font-weight: bold;
+}
+
+.level-Medium {
+  color: #ca8a04;
+  font-weight: bold;
+}
+
+.level-High {
+  color: #ea580c;
+  font-weight: bold;
+}
+
+.level-Critical {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* ===== Heatmap ===== */
+.heatmap {
+  display: grid;
+  grid-template-columns: repeat(5, 60px);
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.heat-cell {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 4px;
+}
