@@ -1,6 +1,6 @@
 import { useState } from "react";
-import RiskForm from "./RiskForm";
-import Dashboard from "./Dashboard";
+import RiskForm from "./components/RiskForm"
+import Dashboard from "./components/Dashboard";
 
 export default function App() {
   const [reloadFlag, setReloadFlag] = useState(0);

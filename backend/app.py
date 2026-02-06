@@ -26,7 +26,8 @@ def startup():
             likelihood INTEGER NOT NULL,
             impact INTEGER NOT NULL,
             score INTEGER NOT NULL,
-            level TEXT NOT NULL
+            level TEXT NOT NULL,
+            hint TEXT NOT NULL
         )
     """)
     conn.commit()
@@ -35,7 +36,14 @@ def startup():
 
 # ---------- RISK LOGIC ----------
 def calculate_risk(likelihood: int, impact: int):
-    if not (1 <= likelihood <= 5 and 1 <= impact <= 5):
+    # STRICT validation (mandatory)
+    if not isinstance(likelihood, int) or not isinstance(impact, int):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid range: Likelihood and Impact must be 1–5."
+        )
+
+    if likelihood < 1 or likelihood > 5 or impact < 1 or impact > 5:
         raise HTTPException(
             status_code=400,
             detail="Invalid range: Likelihood and Impact must be 1–5."
@@ -43,16 +51,20 @@ def calculate_risk(likelihood: int, impact: int):
 
     score = likelihood * impact
 
-    if score <= 5:
+    if 1 <= score <= 5:
         level = "Low"
-    elif score <= 12:
+        hint = "Accept / monitor"
+    elif 6 <= score <= 12:
         level = "Medium"
-    elif score <= 18:
+        hint = "Plan mitigation within 6 months"
+    elif 13 <= score <= 18:
         level = "High"
+        hint = "Prioritize action + compensating controls (NIST PR.AC)"
     else:
         level = "Critical"
+        hint = "Immediate mitigation required + executive reporting"
 
-    return score, level
+    return score, level, hint
 
 
 # ---------- SCHEMA ----------
@@ -66,16 +78,27 @@ class RiskInput(BaseModel):
 # ---------- API ENDPOINTS ----------
 @app.post("/api/assess-risk")
 def assess_risk(risk: RiskInput):
-    score, level = calculate_risk(risk.likelihood, risk.impact)
+    score, level, hint = calculate_risk(
+        risk.likelihood,
+        risk.impact
+    )
 
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO risks (asset, threat, likelihood, impact, score, level)
-        VALUES (?, ?, ?, ?, ?, ?)
-    """, (risk.asset, risk.threat, risk.likelihood, risk.impact, score, level))
-    conn.commit()
+        INSERT INTO risks (asset, threat, likelihood, impact, score, level, hint)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (
+        risk.asset,
+        risk.threat,
+        risk.likelihood,
+        risk.impact,
+        score,
+        level,
+        hint
+    ))
 
+    conn.commit()
     risk_id = cursor.lastrowid
     conn.close()
 
@@ -86,7 +109,8 @@ def assess_risk(risk: RiskInput):
         "likelihood": risk.likelihood,
         "impact": risk.impact,
         "score": score,
-        "level": level
+        "level": level,
+        "hint": hint
     }
 
 
@@ -96,7 +120,10 @@ def get_risks(level: str | None = None):
     cursor = conn.cursor()
 
     if level:
-        cursor.execute("SELECT * FROM risks WHERE level = ?", (level,))
+        cursor.execute(
+            "SELECT * FROM risks WHERE level = ?",
+            (level,)
+        )
     else:
         cursor.execute("SELECT * FROM risks")
 
