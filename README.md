@@ -110,7 +110,7 @@ This model mirrors common enterprise GRC tools and aligns with **NIST SP 800-30 
 
 ---
 
-### Backend Setup
+### Backend Setup and frontend Sstup
 
 ```bash
 cd backend
@@ -127,7 +127,7 @@ cd frontend
 npm install
 npm start
 
-
+```
 
 ### Risk Assessment Form with Live Preview
 The risk input form allows users to define assets and threats, select likelihood and impact (1–5), and instantly preview the calculated risk score, level, and recommended mitigation before submission.
