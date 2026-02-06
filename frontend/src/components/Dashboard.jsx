@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import RiskHeatmap from "./RiskHeatmap";
+import API_BASE from "../api";
 
 export default function Dashboard({ reloadFlag }) {
   const [risks, setRisks] = useState([]);
@@ -9,7 +10,7 @@ export default function Dashboard({ reloadFlag }) {
 
   useEffect(() => {
     setLoading(true);
-    fetch("/api/risks")
+    fetch(`${API_BASE}/api/risks`)
       .then((res) => res.json())
       .then((data) => {
         setRisks(Array.isArray(data) ? data : []);

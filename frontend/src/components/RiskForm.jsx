@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API_BASE from "../api";
 
 function calculateRisk(likelihood, impact) {
   const score = likelihood * impact;
@@ -53,7 +54,7 @@ export default function RiskForm({ onRiskAdded }) {
 
     setLoading(true);
 
-    const res = await fetch("/api/assess-risk", {
+    const res = await fetch(`${API_BASE}/api/assess-risk`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
