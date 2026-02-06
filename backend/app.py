@@ -36,13 +36,6 @@ def startup():
 
 # ---------- RISK LOGIC ----------
 def calculate_risk(likelihood: int, impact: int):
-    # STRICT validation (mandatory)
-    if not isinstance(likelihood, int) or not isinstance(impact, int):
-        raise HTTPException(
-            status_code=400,
-            detail="Invalid range: Likelihood and Impact must be 1–5."
-        )
-
     if likelihood < 1 or likelihood > 5 or impact < 1 or impact > 5:
         raise HTTPException(
             status_code=400,
@@ -51,20 +44,24 @@ def calculate_risk(likelihood: int, impact: int):
 
     score = likelihood * impact
 
-    if 1 <= score <= 5:
+    if score <= 5:
         level = "Low"
-        hint = "Accept / monitor"
-    elif 6 <= score <= 12:
+        hint = "Accept risk; monitor periodically (ISO 27001 risk acceptance)"
+    elif score <= 12:
         level = "Medium"
-        hint = "Plan mitigation within 6 months"
-    elif 13 <= score <= 18:
+        hint = "Plan mitigation; define controls and timelines (NIST ID.RA)"
+    elif score <= 18:
         level = "High"
-        hint = "Prioritize action + compensating controls (NIST PR.AC)"
+        hint = "Recommend NIST PR.AC-7: Rate limiting and access control enforcement"
     else:
         level = "Critical"
-        hint = "Immediate mitigation required + executive reporting"
+        hint = (
+            "Immediate mitigation required; executive escalation "
+            "(NIST CSF RS & ISO 27001 incident response)"
+        )
 
     return score, level, hint
+
 
 
 # ---------- SCHEMA ----------

@@ -129,6 +129,18 @@ npm start
 
 ```
 
+## Testing
+
+The application was manually tested by adding 5–10 sample risks with varying likelihood and impact values.
+
+The following were verified:
+- Risk scores and levels matched the defined scoring logic
+- Filtering by risk level returned correct results
+- Sorting by score worked as expected
+- Heatmap cell counts accurately reflected likelihood-impact combinations
+- CSV export matched the displayed data
+
+
 ### Risk Assessment Form with Live Preview
 The risk input form allows users to define assets and threats, select likelihood and impact (1–5), and instantly preview the calculated risk score, level, and recommended mitigation before submission.
 
