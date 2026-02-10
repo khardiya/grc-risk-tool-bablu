@@ -1,164 +1,25 @@
 # GRC Risk Assessment & Heatmap Dashboard
 
-## Overview
+This project implements a basic GRC risk assessment workflow using a
+Likelihood × Impact matrix, aligned with NIST/ISO-style risk analysis.
 
-This project is a full-stack **GRC (Governance, Risk, and Compliance)** risk assessment tool that implements a standard **Likelihood × Impact risk matrix**, commonly used in frameworks such as **NIST SP 800-30** and **ISO/IEC 27001**.
+## Features
+- Add risks with likelihood and impact (1–5)
+- Automatic risk score and level calculation
+- Persistent storage using SQLite
+- Dashboard with table and 5×5 heatmap visualization
 
-The application allows users to:
-- Assess risks using likelihood and impact scores (1–5)
-- Automatically calculate risk score and risk level
-- Persist risks in a database
-- Visualize organizational risk posture via a 5×5 heatmap
-- Analyze risks using filters, sorting, statistics, and CSV export
-
-The goal of this assignment was to demonstrate the ability to independently build a **complete, production-style mini GRC system**, not just isolated backend or frontend components.
-
----
-
-## Tech Stack
-
-### Backend
-- **FastAPI** – REST API
-- **SQLite** – persistent storage
-- **Pydantic** – request validation
-
-### Frontend
-- **React (Hooks)** – UI and state management
-- **Fetch API** – backend communication
-- **Plain CSS / inline styles** – clean, functional UI
-
----
-
-## Risk Scoring Logic (Core GRC Concept)
-
-Each risk is evaluated using:
-
-Risk Score = Likelihood × Impact
-
-### Risk Level Mapping
-
-| Score Range | Level     | Meaning |
-|------------|-----------|--------|
-| 1–5        | Low       | Acceptable / Monitor |
-| 6–12       | Medium    | Requires mitigation planning |
-| 13–18      | High      | Priority action required |
-| 19–25      | Critical  | Immediate mitigation & escalation |
-
-This model mirrors common enterprise GRC tools and aligns with **NIST SP 800-30 risk assessment guidance**.
-
----
-
-## Backend Features
-
-- `POST /api/assess-risk`
-  - Validates likelihood and impact (must be integers 1–5)
-  - Calculates score, level, and mitigation hint
-  - Persists risk in SQLite
-  - Returns the created risk object
-
-- `GET /api/risks`
-  - Returns all risks
-  - Supports filtering: `/api/risks?level=High`
-
-- Strict input validation with clear HTTP 400 error messages
-
----
-
-## Frontend Features
-
-### Risk Input Form
-- Asset and Threat inputs
-- Likelihood & Impact sliders (1–5)
-- **Real-time preview** of:
-  - Risk Score
-  - Risk Level
-  - Mitigation Hint
-- Client-side logic mirrors backend scoring
-- Form resets after successful submission
-
-### Dashboard
-- Tabular view of all risks
-- Sort by **Score**
-- Filter by **Risk Level**
-- Mitigation hint column
-- Summary statistics:
-  - Total risks
-  - High + Critical risks
-  - Average risk score
-
-### Risk Heatmap (Key Feature)
-- True **5×5 Likelihood × Impact matrix**
-- Correct GRC orientation:
-  - Likelihood on Y-axis (5 → 1)
-  - Impact on X-axis (1 → 5)
-- Cell color reflects risk severity
-- Each cell shows count of risks
-- Hover tooltip displays affected assets
-
-### CSV Export
-- Exports filtered risks
-- Includes mitigation hints
-- Ready for audit / reporting use
-
----
-
-## Setup & Run Instructions
-
-### Prerequisites
-- Python 3.8+
-- Node.js 16+
-
----
-
-### Backend Setup and frontend Sstup
-
-```bash
+## Run Backend
 cd backend
 pip install -r requirements.txt
-uvicorn app:app --reload
+python -m uvicorn app:app --reload
 
-
-Backend runs at:
-http://localhost:8000
-
-
-Frontend Setup
+## Run Frontend
 cd frontend
 npm install
 npm start
 
-```
-
-## Testing
-
-The application was manually tested by adding 5–10 sample risks with varying likelihood and impact values.
-
-The following were verified:
-- Risk scores and levels matched the defined scoring logic
-- Filtering by risk level returned correct results
-- Sorting by score worked as expected
-- Heatmap cell counts accurately reflected likelihood-impact combinations
-- CSV export matched the displayed data
-
-
-### Risk Assessment Form with Live Preview
-The risk input form allows users to define assets and threats, select likelihood and impact (1–5), and instantly preview the calculated risk score, level, and recommended mitigation before submission.
-
-## Screenshots
-
-### Risk Assessment Form with Live Preview
-![Risk Form Preview](frontend/screenshots/risk-form.png)
-
-### Risk Dashboard with Filtering, Sorting, and Export
-![Risk Dashboard Table](frontend/screenshots/risk-dashboard.png)
-
-### Risk Heatmap (Likelihood × Impact Matrix)
-![Risk Heatmap](frontend/screenshots/risk-heatmap.png)
-
-
-## Live Demo (Optional)
-
-The application has been deployed to demonstrate end-to-end functionality without requiring local setup.
-
-- **Frontend (Vercel):** https://grc-risk-assessment-dashboard.vercel.app  
-- **Backend API (Render):** https://grc-risk-backend.onrender.com
+## Assumptions
+- No authentication required
+- Single-user local system
+- Focused on core GRC risk scoring only
